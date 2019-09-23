@@ -10,14 +10,14 @@ in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:constant, git: "vasuadari/constant"}
+    {:constant, github: "vasuadari/constant"}
   ]
 end
 ```
 
 ## Usage
 
-```
+```elixir
 defmodule HTTPStatusCode do
   import Constant
 
@@ -40,3 +40,8 @@ iex> ColorCode.black()
 iex> ColorCode.black_atom()
 :FFFFFF
 ```
+
+## License
+
+Constant source code is licensed under the [MIT License](LICENSE).
+

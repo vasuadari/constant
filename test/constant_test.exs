@@ -4,17 +4,17 @@ defmodule ConstantTest do
   defmodule TestConstant do
     import Constant
 
-    defconst a: 1
+    defconst(a: 1)
 
-    defconst [b: "c"], atomize: true
+    defconst([b: "c"], atomize: true)
 
-    defconst c: %{a: 2}
+    defconst(c: %{a: 2})
 
-    defconst d: {0, 0}
+    defconst(d: {0, 0})
 
-    defconst e: [1, 2, 3]
+    defconst(e: [1, 2, 3])
 
-    defconst f: [a: 1, b: 2]
+    defconst(f: [a: 1, b: 2])
   end
 
   test "returns integer for a constant" do
@@ -48,7 +48,7 @@ defmodule ConstantTest do
       defmodule Dummy do
         import Constant
 
-        defconst [{"g", 1}]
+        defconst([{"g", 1}])
       end
     end
   end

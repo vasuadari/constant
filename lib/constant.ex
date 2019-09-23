@@ -30,4 +30,3 @@ defmodule Constant do
     end
   end
 end
-
