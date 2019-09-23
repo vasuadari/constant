@@ -1,13 +1,42 @@
 defmodule Constant.MixProject do
   use Mix.Project
 
+  @github_url "https://github.com/vasuadari/constant"
+  @version "0.0.1"
+
   def project do
     [
       app: :constant,
-      version: "0.0.1",
+      version: @version,
       elixir: "~> 1.6",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      description: description(),
+      package: package(),
+      maintainers: ["Vasu Adari"],
+      deps: deps(),
+      name: "constant",
+      docs: docs(),
+      source_url: @github_url
+    ]
+  end
+
+  defp description do
+    "A package to create constants in elixir modules."
+  end
+
+  defp package do
+    [
+      name: "constant",
+      licences: ["MIT"],
+      links: %{"Github" => @github_url}
+    ]
+  end
+
+  defp docs do
+    [
+      main: "Constant",
+      source_ref: "v#{@version}",
+      extras: ["README.md"]
     ]
   end
 
@@ -21,8 +50,7 @@ defmodule Constant.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 end
