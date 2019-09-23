@@ -5,10 +5,19 @@ defmodule Constant do
 
       Enum.each(list, fn
         {key, value} when is_atom(key) and is_binary(value) ->
-          value = if(opts[:atomize_values], do: to_atom(value), else: value)
-          escaped_value = Macro.escape(value)
+          if opts[:atomize] do
+            escaped_value = Macro.escape(value)
 
-          def unquote(key)(), do: unquote(escaped_value)
+            def unquote(key)(), do: unquote(escaped_value)
+
+            escaped_atom_value = Macro.escape(to_atom(value))
+
+            def unquote(:"#{key}_atom")(), do: unquote(escaped_atom_value)
+          else
+            escaped_value = Macro.escape(value)
+
+            def unquote(key)(), do: unquote(escaped_value)
+          end
 
         {key, value} when is_atom(key) ->
           escaped_value = Macro.escape(value)

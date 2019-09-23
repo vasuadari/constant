@@ -6,7 +6,7 @@ defmodule ConstantTest do
 
     defconst a: 1
 
-    defconst [b: "c"], atomize_values: true
+    defconst [b: "c"], atomize: true
 
     defconst c: %{a: 2}
 
@@ -21,8 +21,10 @@ defmodule ConstantTest do
     assert TestConstant.a() == 1
   end
 
-  test "returns atom value for a constant when atomize_values option is true" do
-    assert TestConstant.b() == :c
+  test "returns atom & string constant when atomize_values option is true" do
+    assert TestConstant.b() == "c"
+
+    assert TestConstant.b_atom() == :c
   end
 
   test "returns map for a constant" do
