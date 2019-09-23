@@ -1,4 +1,5 @@
 # Constant
+[![Build Status](https://travis-ci.org/vasuadari/constant.svg?branch=master)](https://travis-ci.org/vasuadari/constant)
 
 A package to define constants in your module.
 
