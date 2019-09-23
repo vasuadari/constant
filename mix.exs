@@ -27,7 +27,7 @@ defmodule Constant.MixProject do
   defp package do
     [
       name: "constant",
-      licences: ["MIT"],
+      licenses: ["MIT"],
       links: %{"Github" => @github_url}
     ]
   end

@@ -11,7 +11,7 @@ in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:constant, github: "vasuadari/constant"}
+    {:constant, "~> 0.0.1"}
   ]
 end
 ```
