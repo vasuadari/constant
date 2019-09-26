@@ -1,5 +1,6 @@
 # Constant
 [![Build Status](https://travis-ci.org/vasuadari/constant.svg?branch=master)](https://travis-ci.org/vasuadari/constant)
+[![Hex.pm version](https://img.shields.io/hexpm/v/constant.svg)](https://hex.pm/packages/constant)
 
 A package to define constants in your module.
 
