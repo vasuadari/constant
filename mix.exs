@@ -2,7 +2,7 @@ defmodule Constant.MixProject do
   use Mix.Project
 
   @github_url "https://github.com/vasuadari/constant"
-  @version "0.0.1"
+  @version "0.0.2"
 
   def project do
     [
