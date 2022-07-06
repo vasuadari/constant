@@ -100,4 +100,38 @@ defmodule ConstantTest do
       assert StringTest.b?(:c)
     end
   end
+
+  describe "values/0" do
+    test "returns list of values defined" do
+      assert IntegerTest.values() == [1]
+      assert StringTest.values() == ["c", :c]
+      assert MapTest.values() == [%{a: 2}]
+      assert TupleTest.values() == [{0, 0}]
+      assert KeywordTest.values() == [[a: 1, b: 2]]
+    end
+  end
+
+  describe "valid?/1" do
+    test "returns true when given value is valid" do
+      assert IntegerTest.valid?(1)
+      assert StringTest.valid?("c")
+      assert StringTest.valid?(:c)
+    end
+
+    test "returns false when given value is invalid" do
+      refute IntegerTest.valid?(2)
+      refute StringTest.valid?("x")
+      refute StringTest.valid?(:z)
+    end
+  end
+
+  describe "dump/0" do
+    test "returns true when given value is valid" do
+      assert IntegerTest.dump() == [a: 1]
+      assert StringTest.dump() == [b: "c"]
+      assert MapTest.dump() == [c: %{a: 2}]
+      assert TupleTest.dump() == [d: {0, 0}]
+      assert KeywordTest.dump() == [f: [a: 1, b: 2]]
+    end
+  end
 end
