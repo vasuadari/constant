@@ -104,10 +104,30 @@ defmodule ConstantTest do
   describe "values/0" do
     test "returns list of values defined" do
       assert IntegerTest.values() == [1]
-      assert StringTest.values() == ["c", :c]
+      assert StringTest.values() == ["c"]
       assert MapTest.values() == [%{a: 2}]
       assert TupleTest.values() == [{0, 0}]
       assert KeywordTest.values() == [[a: 1, b: 2]]
+    end
+  end
+
+  describe "atom_values/0" do
+    test "returns list of atom values" do
+      assert IntegerTest.atom_values() == []
+      assert StringTest.atom_values() == [:c]
+      assert MapTest.atom_values() == []
+      assert TupleTest.atom_values() == []
+      assert KeywordTest.atom_values() == []
+    end
+  end
+
+  describe "all_values/0" do
+    test "returns list of atom and non-atom values defined" do
+      assert IntegerTest.all_values() == [1]
+      assert StringTest.all_values() == ["c", :c]
+      assert MapTest.all_values() == [%{a: 2}]
+      assert TupleTest.all_values() == [{0, 0}]
+      assert KeywordTest.all_values() == [[a: 1, b: 2]]
     end
   end
 

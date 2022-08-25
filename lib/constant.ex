@@ -3,15 +3,6 @@ defmodule Constant do
 
   defmacro defconst(list, opts \\ []) do
     values = Keyword.values(list)
-      atom_values =
-        if opts[:atomize] do
-          values
-           |> Enum.filter(&is_binary(&1))
-           |> Enum.map(&to_atom(&1))
-        else
-          []
-        end
-      values = values ++ atom_values
 
     quote bind_quoted: [list: list, opts: opts, values: values], location: :keep do
       Enum.each(list, fn
@@ -41,18 +32,31 @@ defmodule Constant do
           raise "Key has to be an atom"
       end)
 
-      escaped_values = Macro.escape(values)
-      def values do
-        unquote(escaped_values)
-      end
+      atom_values =
+        if opts[:atomize] do
+          values
+          |> Enum.filter(&is_binary(&1))
+          |> Enum.map(&to_atom(&1))
+        else
+          []
+        end
 
-      def valid?(value) do
-        value in unquote(escaped_values)
-      end
+      all_values = values ++ atom_values
+
+      escaped_atom_values = Macro.escape(atom_values)
+      def atom_values, do: unquote(escaped_atom_values)
+
+      escaped_values = Macro.escape(values)
+      def values, do: unquote(escaped_values)
+
+      escaped_all_values = Macro.escape(all_values)
+      def all_values, do: unquote(escaped_all_values)
 
       escaped_list = Macro.escape(list)
-      def dump do
-        unquote(escaped_list)
+      def dump, do: unquote(escaped_list)
+
+      def valid?(value) do
+        value in unquote(escaped_all_values)
       end
     end
   end
