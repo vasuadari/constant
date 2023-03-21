@@ -39,28 +39,42 @@ defmodule ConstantTest do
 
   test "returns integer for a constant" do
     assert IntegerTest.a() == 1
+
+    require IntegerTest
+    assert IntegerTest.const_a() = 1
   end
 
   test "returns atom & string constant when atomize_values option is true" do
     assert StringTest.b() == "c"
-
     assert StringTest.b_atom() == :c
+
+    require StringTest
+    assert StringTest.const_b() = "c"
+    assert StringTest.const_b_atom() = :c
   end
 
   test "returns map for a constant" do
     assert MapTest.c() == %{a: 2}
+    require MapTest
+    assert MapTest.const_c() = %{a: 2}
   end
 
   test "returns tuple for a constant" do
     assert TupleTest.d() == {0, 0}
+    require TupleTest
+    assert TupleTest.const_d() = {0, 0}
   end
 
   test "returns list for a constant" do
     assert ListTest.e() == [1, 2, 3]
+    require ListTest
+    assert ListTest.const_e() = [1, 2, 3]
   end
 
   test "returns keyword list for a constant" do
     assert KeywordTest.f() == [a: 1, b: 2]
+    require KeywordTest
+    assert KeywordTest.const_f() = [a: 1, b: 2]
   end
 
   test "raises exception when key is not an atom" do

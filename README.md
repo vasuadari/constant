@@ -43,6 +43,17 @@ iex> ColorCode.black_atom()
 :FFFFFF
 ```
 
+The constant can be used in the format `const_<key>` after requiring the module, and which enables the constant to be directly used in argument pattern matches and guards.
+
+```elixir
+defmodule ColorCodeMatcher do
+  require ColorCode
+
+  def is_black(_color = ColorCode.const_black()), do: true
+  def is_black(_), do: false
+end
+```
+
 ## License
 
 Constant source code is licensed under the [MIT License](LICENSE).
