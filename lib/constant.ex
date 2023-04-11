@@ -14,10 +14,18 @@ defmodule Constant do
 
           def unquote(key)(), do: unquote(escaped_value)
 
+          defmacro unquote(:"const_#{key}")() do
+            unquote(quote do: unquote(Macro.escape(escaped_value)))
+          end
+
           if opts[:atomize] && is_binary(value) do
             escaped_atom_value = Macro.escape(to_atom(value))
 
             def unquote(:"#{key}_atom")(), do: unquote(escaped_atom_value)
+
+            defmacro unquote(:"const_#{key}_atom")() do
+              unquote(quote do: unquote(escaped_atom_value))
+            end
 
             def unquote(:"#{key}?")(value) do
               value in [unquote(escaped_value), unquote(escaped_atom_value)]
