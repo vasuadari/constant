@@ -168,4 +168,27 @@ defmodule ConstantTest do
       assert KeywordTest.dump() == [f: [a: 1, b: 2]]
     end
   end
+
+  describe "key_of/1" do
+    test "returns key of given value" do
+      assert :a = IntegerTest.key_of(1)
+    end
+
+    test "returns nil when given value is not present" do
+      refute IntegerTest.key_of(2)
+    end
+  end
+
+  describe "key_of/2" do
+    test "returns key for any given constant module" do
+      modules = [IntegerTest, StringTest, MapTest, KeywordTest, TupleTest, ListTest]
+
+      assert :a = Constant.key_of(1, modules)
+      assert :b = Constant.key_of("c", modules)
+      assert :c = Constant.key_of(%{a: 2}, modules)
+      assert :d = Constant.key_of({0, 0}, modules)
+      assert :e = Constant.key_of([1, 2, 3], modules)
+      assert :f = Constant.key_of([a: 1, b: 2], modules)
+    end
+  end
 end
