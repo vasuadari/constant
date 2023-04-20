@@ -4,31 +4,31 @@ defmodule ConstantTest do
   defmodule IntegerTest do
     import Constant
 
-    defconst(a: 1)
+    defconst([a: 1], reverse_lookup: true)
   end
 
   defmodule StringTest do
     import Constant
 
-    defconst([b: "c"], atomize: true)
+    defconst([b: "c"], atomize: true, reverse_lookup: true)
   end
 
   defmodule MapTest do
     import Constant
 
-    defconst(c: %{a: 2})
+    defconst([c: %{a: 2}], reverse_lookup: true)
   end
 
   defmodule TupleTest do
     import Constant
 
-    defconst(d: {0, 0})
+    defconst([d: {0, 0}], reverse_lookup: true)
   end
 
   defmodule ListTest do
     import Constant
 
-    defconst(e: [1, 2, 3])
+    defconst([e: [1, 2, 3]], reverse_lookup: true)
   end
 
   defmodule KeywordTest do
@@ -166,6 +166,29 @@ defmodule ConstantTest do
       assert MapTest.dump() == [c: %{a: 2}]
       assert TupleTest.dump() == [d: {0, 0}]
       assert KeywordTest.dump() == [f: [a: 1, b: 2]]
+    end
+  end
+
+  describe "key_of/1" do
+    test "returns key of given value" do
+      assert :a = IntegerTest.key_of(1)
+    end
+
+    test "returns nil when given value is not present" do
+      refute IntegerTest.key_of(2)
+    end
+  end
+
+  describe "key_of/2" do
+    test "returns key for any given constant module" do
+      modules = [IntegerTest, StringTest, MapTest, TupleTest, ListTest, KeywordTest]
+
+      assert :a = Constant.key_of(1, modules)
+      assert :b = Constant.key_of("c", modules)
+      assert :c = Constant.key_of(%{a: 2}, modules)
+      assert :d = Constant.key_of({0, 0}, modules)
+      assert :e = Constant.key_of([1, 2, 3], modules)
+      refute Constant.key_of([a: 1, b: 2], modules)
     end
   end
 end
