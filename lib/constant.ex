@@ -18,8 +18,10 @@ defmodule Constant do
             unquote(quote do: unquote(Macro.escape(escaped_value)))
           end
 
-          escaped_key = Macro.escape(key)
-          def key_of(unquote(escaped_value)), do: unquote(key)
+          if opts[:reverse_lookup]  do
+            escaped_key = Macro.escape(key)
+            def key_of(unquote(escaped_value)), do: unquote(escaped_key)
+          end
 
           if opts[:atomize] && is_binary(value) do
             escaped_atom_value = Macro.escape(to_atom(value))
@@ -43,7 +45,9 @@ defmodule Constant do
           raise "Key has to be an atom"
       end)
 
-      def key_of(_), do: nil
+      if opts[:reverse_lookup] do
+        def key_of(_), do: nil
+      end
 
       atom_values =
         if opts[:atomize] do
