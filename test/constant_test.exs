@@ -181,14 +181,16 @@ defmodule ConstantTest do
 
   describe "key_of/2" do
     test "returns key for any given constant module" do
-      modules = [IntegerTest, StringTest, MapTest, TupleTest, KeywordTest, ListTest]
+      modules = [IntegerTest, StringTest, MapTest, TupleTest, ListTest, KeywordTest]
 
       assert :a = Constant.key_of(1, modules)
       assert :b = Constant.key_of("c", modules)
       assert :c = Constant.key_of(%{a: 2}, modules)
       assert :d = Constant.key_of({0, 0}, modules)
       assert :e = Constant.key_of([1, 2, 3], modules)
-      refute Constant.key_of([a: 1, b: 2], modules)
+      assert_raise Constant.Error, "reverse_lookup option is not set", fn ->
+        Constant.key_of([a: 1, b: 2], modules)
+      end
     end
   end
 end

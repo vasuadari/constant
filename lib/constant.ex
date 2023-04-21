@@ -78,13 +78,14 @@ defmodule Constant do
     end
   end
 
+  defmodule Error, do: defexception [:message]
+
   def key_of(_value, []), do: nil
 
   def key_of(value, [module | other_modules]) do
-    if function_exported?(module, :key_of, 1) do
-      module.key_of(value) || key_of(value, other_modules)
-    else
-      key_of(value, other_modules)
-    end
+    module.key_of(value) || key_of(value, other_modules)
+  rescue
+    UndefinedFunctionError ->
+      raise Error, "reverse_lookup option is not set"
   end
 end
