@@ -83,6 +83,8 @@ defmodule Constant do
   def key_of(value, [module | other_modules]) do
     if function_exported?(module, :key_of, 1) do
       module.key_of(value) || key_of(value, other_modules)
+    else
+      key_of(value, other_modules)
     end
   end
 end

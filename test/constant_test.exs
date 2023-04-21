@@ -181,7 +181,7 @@ defmodule ConstantTest do
 
   describe "key_of/2" do
     test "returns key for any given constant module" do
-      modules = [IntegerTest, StringTest, MapTest, TupleTest, ListTest, KeywordTest]
+      modules = [IntegerTest, StringTest, MapTest, TupleTest, KeywordTest, ListTest]
 
       assert :a = Constant.key_of(1, modules)
       assert :b = Constant.key_of("c", modules)
