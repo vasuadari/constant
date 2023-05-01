@@ -41,8 +41,6 @@ defmodule Constant do
             end
           end
 
-          def has_key?(key), do: key == unquote(escaped_key)
-
         _ ->
           raise "Key has to be an atom"
       end)
@@ -77,6 +75,9 @@ defmodule Constant do
       def valid?(value) do
         value in unquote(escaped_all_values)
       end
+
+      escaped_all_keys = Keyword.keys(Macro.escape(list))
+      def has_key?(key), do: key in unquote(escaped_all_keys)
     end
   end
 
@@ -91,7 +92,7 @@ defmodule Constant do
       raise Error, "reverse_lookup option is not set"
   end
 
-  def has_key?(key, []), do: false
+  def has_key?(_key, []), do: false
 
   def has_key?(key, [module | other_modules]) do
     module.has_key?(key) || has_key?(key, other_modules)
