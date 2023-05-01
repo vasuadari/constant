@@ -11,6 +11,7 @@ defmodule Constant do
 
         {key, value} when is_atom(key) ->
           escaped_value = Macro.escape(value)
+          escaped_key = Macro.escape(key)
 
           def unquote(key)(), do: unquote(escaped_value)
 
@@ -18,8 +19,7 @@ defmodule Constant do
             unquote(quote do: unquote(Macro.escape(escaped_value)))
           end
 
-          if opts[:reverse_lookup]  do
-            escaped_key = Macro.escape(key)
+          if opts[:reverse_lookup] do
             def key_of(unquote(escaped_value)), do: unquote(escaped_key)
           end
 
@@ -40,6 +40,8 @@ defmodule Constant do
               value == unquote(escaped_value)
             end
           end
+
+          def has_key?(key), do: key == unquote(escaped_key)
 
         _ ->
           raise "Key has to be an atom"
@@ -78,7 +80,7 @@ defmodule Constant do
     end
   end
 
-  defmodule Error, do: defexception [:message]
+  defmodule Error, do: defexception([:message])
 
   def key_of(_value, []), do: nil
 
