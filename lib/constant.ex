@@ -90,4 +90,10 @@ defmodule Constant do
     UndefinedFunctionError ->
       raise Error, "reverse_lookup option is not set"
   end
+
+  def has_key?(key, []), do: false
+
+  def has_key?(key, [module | other_modules]) do
+    module.has_key?(key) || has_key?(key, other_modules)
+  end
 end

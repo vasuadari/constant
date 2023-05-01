@@ -195,7 +195,7 @@ defmodule ConstantTest do
     end
   end
 
-  describe "has_key?/2" do
+  describe "has_key?/1" do
     test "returns true when key exists for a given module" do
       assert IntegerTest.has_key?(:a)
       assert StringTest.has_key?(:b)
@@ -212,6 +212,30 @@ defmodule ConstantTest do
       refute TupleTest.has_key?(:c)
       refute ListTest.has_key?(:b)
       refute KeywordTest.has_key?(:a)
+    end
+  end
+
+  describe "has_key?/2" do
+    test "returns true when key exists in any of the given modules" do
+      modules = [IntegerTest, StringTest, MapTest, TupleTest, ListTest, KeywordTest]
+
+      assert Constant.has_key?(:a, modules)
+      assert Constant.has_key?(:b, modules)
+      assert Constant.has_key?(:c, modules)
+      assert Constant.has_key?(:d, modules)
+      assert Constant.has_key?(:e, modules)
+      assert Constant.has_key?(:f, modules)
+    end
+
+    test "returns false when key exists in any of the given modules" do
+      modules = [IntegerTest, StringTest, MapTest, TupleTest, ListTest, KeywordTest]
+
+      refute Constant.has_key?(:ab, modules)
+      refute Constant.has_key?(:bc, modules)
+      refute Constant.has_key?(:cd, modules)
+      refute Constant.has_key?(:de, modules)
+      refute Constant.has_key?(:ef, modules)
+      refute Constant.has_key?(:fg, modules)
     end
   end
 end
