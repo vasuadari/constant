@@ -77,6 +77,8 @@ defmodule Constant do
       end
 
       escaped_all_keys = Keyword.keys(Macro.escape(list))
+      def keys, do: unquote(escaped_all_keys)
+
       def has_key?(key), do: key in unquote(escaped_all_keys)
     end
   end

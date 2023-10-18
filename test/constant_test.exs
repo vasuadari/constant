@@ -238,4 +238,15 @@ defmodule ConstantTest do
       refute Constant.has_key?(:fg, modules)
     end
   end
+
+  describe "keys/0" do
+    test "returns keys" do
+      assert IntegerTest.keys() == [:a]
+      assert StringTest.keys() == [:b]
+      assert MapTest.keys() == [:c]
+      assert TupleTest.keys() == [:d]
+      assert ListTest.keys() == [:e]
+      assert KeywordTest.keys() == [:f]
+    end
+  end
 end
