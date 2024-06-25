@@ -1,10 +1,16 @@
 defmodule Constant do
-  import String, only: [to_atom: 1]
+  defmacro defconst(list) do
+    define_const(list, [])
+  end
 
-  defmacro defconst(list, opts \\ []) do
-    values = Keyword.values(list)
+  defmacro defconst(list, opts) do
+    define_const(list, opts)
+  end
 
-    quote bind_quoted: [list: list, opts: opts, values: values], location: :keep do
+  def define_const(list, opts) do
+    quote bind_quoted: [list: list, opts: opts] do
+      values = Keyword.values(list)
+
       Enum.each(list, fn
         {key, value} when is_nil(value) ->
           raise "Value cannot be nil"
@@ -24,7 +30,7 @@ defmodule Constant do
           end
 
           if opts[:atomize] && is_binary(value) do
-            escaped_atom_value = Macro.escape(to_atom(value))
+            escaped_atom_value = Macro.escape(String.to_atom(value))
 
             def unquote(:"#{key}_atom")(), do: unquote(escaped_atom_value)
 
@@ -53,7 +59,7 @@ defmodule Constant do
         if opts[:atomize] do
           values
           |> Enum.filter(&is_binary(&1))
-          |> Enum.map(&to_atom(&1))
+          |> Enum.map(&String.to_atom(&1))
         else
           []
         end
